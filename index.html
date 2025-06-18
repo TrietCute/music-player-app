@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container-fluid py-4">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-4 order-md-1 order-2 mb-4 mb-md-0">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-start mb-0">🎶 Music Player 🎵</h2>
+            <button id="toggle-mode" class="btn btn-outline-light">
+              ☀️ Light Mode
+            </button>
+          </div>
+
+          <h4 class="mb-3">Playlist</h4>
+          <ul id="playlist" class="list-group">
+            <li class="list-group-item playlist-item" onclick="selectSong(0)">
+              <img src="img/not-a-hero.jpg" alt="thumb" />
+              <span>[ 킹스레이드 ] OST - -Not A Hero- (ENG ver.)</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(1)">
+              <img src="img/the-right.jpg" alt="thumb" />
+              <span
+                >[KING's RAID] CH.10 Title Song -The Right- - - Rebellion</span
+              >
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(2)">
+              <img src="img/deja-vu.jpg" alt="thumb" />
+              <span
+                >[MV] Deja Vu (Japanese Ver.) - KING's RAID X Dreamcatcher</span
+              >
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(3)">
+              <img src="img/hell-n-back.jpg" alt="thumb" />
+              <span>Bakar - Hell N Back (Official Video)</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(4)">
+              <img src="img/liyue-ost.jpg" alt="thumb" />
+              <span>Genshin Impact - Liyue OST Relaxing Mix</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(5)">
+              <img src="img/operation-blade.jpg" alt="thumb" />
+              <span>Operation Blade</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(6)">
+              <img src="img/operation-lead-seal.jpg" alt="thumb" />
+              <span>Operation Lead Seal</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(7)">
+              <img src="img/with-glory-i-shall-fall.jpg" alt="thumb" />
+              <span>With Glory I Shall Fall</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(8)">
+              <img src="img/blooming-in-the-mud.jpg" alt="thumb" />
+              <span>ウォルピスカーター MV 泥中に咲く</span>
+            </li>
+            <li class="list-group-item playlist-item" onclick="selectSong(9)">
+              <img src="img/little-love-song.jpg" alt="thumb" />
+              <span>オリジナルPV 小さな恋のうた MONGOL800(cover) by天月</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-8 order-md-2 order-1">
+          <div id="player" class="d-flex flex-column flex-md-row">
+            <div class="player-content flex-grow-1 p-4">
+              <div class="song-info mb-4">
+                <img id="song-img" src="img/not-a-hero.jpg" alt="Album Art" />
+                <h4 id="current-song" class="mt-3">Select a song</h4>
+              </div>
+
+              <audio id="audio" src=""></audio>
+
+              <div class="progress-container d-flex align-items-center mb-3">
+                <span id="current-time" class="time-display">0:00</span>
+                <input
+                  type="range"
+                  id="progress"
+                  value="0"
+                  max="100"
+                  class="form-range mx-3"
+                />
+                <span id="duration" class="time-display">0:00</span>
+              </div>
+
+              <div
+                class="controls my-4 d-flex justify-content-center align-items-center"
+              >
+                <button
+                  id="shuffle"
+                  class="btn btn-control control-icon shuffle-icon"
+                ></button>
+                <button
+                  id="prev"
+                  class="btn btn-control control-icon prev-icon"
+                ></button>
+                <button
+                  id="play-pause"
+                  class="btn btn-control btn-play-pause control-icon"
+                >
+                  <div class="play-pause-icon"></div>
+                </button>
+                <button
+                  id="next"
+                  class="btn btn-control control-icon next-icon"
+                ></button>
+                <button
+                  id="repeat"
+                  class="btn btn-control control-icon repeat-icon"
+                ></button>
+              </div>
+
+              <div
+                class="additional-controls mb-4 d-flex flex-column align-items-center gap-2"
+              >
+                <div
+                  class="d-flex justify-content-center align-items-center gap-2"
+                >
+                  <button id="rewind-10" class="btn btn-control btn-sm">
+                    <span class="control-icon rewind-icon"></span>
+                  </button>
+                  <button id="forward-10" class="btn btn-control btn-sm">
+                    <span class="control-icon forward-icon"></span>
+                  </button>
+                </div>
+                <div
+                  class="d-flex justify-content-center align-items-center gap-2"
+                >
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-secondary dropdown-toggle d-flex align-items-center justify-content-center"
+                      type="button"
+                      id="playbackSpeedDropdown"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-tachometer-alt speed-icon me-2"></i>
+                      <span class="speed-display">1x Speed</span>
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="playbackSpeedDropdown"
+                    >
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="0.5"
+                          >0.5x</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="0.75"
+                          >0.75x</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="1"
+                          >1x (Normal)</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="1.25"
+                          >1.25x</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="1.5"
+                          >1.5x</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item playback-speed-item"
+                          href="#"
+                          data-speed="2"
+                          >2x</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-secondary dropdown-toggle d-flex align-items-center justify-content-center"
+                      type="button"
+                      id="sleepTimerDropdown"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-moon sleep-timer-icon me-2"></i>
+                      <span class="timer-display">Hẹn giờ</span>
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="sleepTimerDropdown"
+                    >
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="0"
+                          >Tắt hẹn giờ</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="1"
+                          >1 phút</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="10"
+                          >10 phút</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="15"
+                          >15 phút</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="30"
+                          >30 phút</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item sleep-timer-item"
+                          href="#"
+                          data-minutes="60"
+                          >60 phút</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="volume-control d-flex align-items-center justify-content-center mt-3"
+              >
+                <label for="volume" class="me-2">🔊</label>
+                <input
+                  type="range"
+                  id="volume"
+                  value="100"
+                  max="100"
+                  class="form-range"
+                />
+              </div>
+            </div>
+
+            <div
+              id="visualizer-container"
+              class="d-flex justify-content-center align-items-center p-4"
+            >
+              <canvas
+                id="visualizer"
+                width="150"
+                height="400"
+                style="max-width: 100%"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>
