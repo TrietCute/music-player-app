@@ -1,0 +1,1 @@
+Install extension Live Server, then run file index with Live Server.
