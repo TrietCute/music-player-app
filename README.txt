@@ -1,1 +1,1 @@
-Install extension Live Server, then run file index with Live Server.
+Install extension Live Server (if using VSCode), then run file index with Live Server.
