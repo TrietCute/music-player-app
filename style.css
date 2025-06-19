@@ -4,29 +4,35 @@
   --text-color: #e0e0e0;
   --card-bg: #282828;
   --item-hover: #3a3a3a;
-  --active-bg: #1db954; /* Spotify green */
+  --active-bg: #1db954;
   --active-text: #ffffff;
   --border-color: #3a3a3a;
 
-  --control-btn-bg: #333333; /* Nền nút điều khiển */
-  --control-btn-hover: #4d4d4d; /* Hover nút điều khiển */
-  --play-pause-btn-bg: #1db954; /* Nền nút Play/Pause */
-  --play-pause-btn-hover: #1ed760; /* Hover nút Play/Pause */
+  --control-btn-bg: #333333;
+  --control-btn-hover: #4d4d4d;
+  --play-pause-btn-bg: #1db954;
+  --play-pause-btn-hover: #1ed760;
 
-  --range-track-bg: #5a5a5a; /* Nền thanh range (phần chưa qua) */
-  --range-thumb-bg: #1db954; /* Nút kéo thanh range */
-  --range-filled-bg: #1db954; /* MÀU PHẦN ĐÃ QUA TRÊN THANH TIẾN TRÌNH VÀ VOLUME */
+  --range-track-bg: #5a5a5a;
+  --range-thumb-bg: #1db954;
+  --range-filled-bg: #1db954;
 
   --toggle-btn-bg-dark-mode: #000000;
   --toggle-btn-text-dark-mode: #ffffff;
   --toggle-btn-hover-bg-dark-mode: #ffffff;
   --toggle-btn-hover-text-dark-mode: #000000;
 
-  --icon-color: #e0e0e0; /* Màu mặc định của icon trong Dark Mode */
-  --icon-hover-color: #ffffff; /* Màu icon khi hover trong Dark Mode */
-  --play-pause-icon-color: #ffffff; /* Mặc định icon Play/Pause */
-  --active-icon-color: #1db954; /* Màu icon khi ở trạng thái active (shuffle, repeat) */
-  --time-text-color: #ffffff; /* Màu cho thời gian trong Dark Mode */
+  --icon-color: #e0e0e0;
+  --icon-hover-color: #ffffff;
+  --play-pause-icon-color: #ffffff;
+  --active-icon-color: #1db954;
+  --time-text-color: #ffffff;
+
+  /* New playlist specific colors (can adjust if needed) */
+  --playlist-add-btn: #007bff; /* Primary for add/edit/create */
+  --playlist-add-btn-hover: #0056b3;
+  --playlist-delete-btn: #dc3545; /* Danger for delete */
+  --playlist-delete-btn-hover: #bd2130;
 }
 
 .light-mode {
@@ -38,27 +44,34 @@
   --active-text: #000000;
   --border-color: #dddddd;
 
-  --control-btn-bg: #e0e0e0; /* Nền nút điều khiển */
-  --control-btn-hover: #cccccc; /* Hover nút điều khiển */
-  --play-pause-btn-bg: #333333; /* Nền nút Play/Pause màu đen */
-  --play-pause-btn-hover: #1a1a1a; /* Hover nút Play/Pause màu đen đậm hơn */
+  --control-btn-bg: #e0e0e0;
+  --control-btn-hover: #cccccc;
+  --play-pause-btn-bg: #333333;
+  --play-pause-btn-hover: #1a1a1a;
 
   --range-track-bg: #cccccc;
   --range-thumb-bg: #007bff;
-  --range-filled-bg: #007bff; /* MÀU PHẦN ĐÃ QUA TRONG LIGHT MODE */
+  --range-filled-bg: #007bff;
 
   --toggle-btn-bg-light-mode: #ffffff;
   --toggle-btn-text-light-mode: #000000;
   --toggle-btn-hover-bg-light-mode: #000000;
   --toggle-btn-hover-text-light-mode: #ffffff;
 
-  --icon-color: #333333; /* Màu mặc định của icon trong Light Mode */
-  --icon-hover-color: #000000; /* Màu icon khi hover trong Light Mode */
-  --play-pause-icon-color: #ffffff; /* Vẫn giữ trắng để tương phản với nền đen của nút */
-  --active-icon-color: #007bff; /* Màu icon khi ở trạng thái active */
-  --time-text-color: #333333; /* Màu cho thời gian trong Light Mode */
+  --icon-color: #333333;
+  --icon-hover-color: #000000;
+  --play-pause-icon-color: #ffffff;
+  --active-icon-color: #007bff;
+  --time-text-color: #333333;
+
+  /* New playlist specific colors for light mode */
+  --playlist-add-btn: #007bff;
+  --playlist-add-btn-hover: #0056b3;
+  --playlist-delete-btn: #dc3545;
+  --playlist-delete-btn-hover: #bd2130;
 }
 
+/* ===== GENERAL STYLES ===== */
 html,
 body {
   background-color: var(--bg-color);
@@ -68,9 +81,8 @@ body {
   min-height: 100vh;
 }
 
-/* Đảm bảo toàn bộ container phù hợp với background */
 .container-fluid {
-  background-color: var(--bg-color); /* Có thể bỏ dòng này nếu body đã xử lý */
+  background-color: var(--bg-color);
   min-height: 100vh;
 }
 
@@ -79,68 +91,77 @@ h4 {
   color: var(--text-color) !important;
 }
 
-/* Sửa lại #player để nó là flex container chính cho nội dung và visualizer */
-#player {
+/* Header with title and toggle button */
+.d-flex.justify-content-between.align-items-center.mb-3 {
   background-color: var(--card-bg);
-  padding: 0; /* Bỏ padding ở đây để các div con tự xử lý */
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  /* flex-direction: column mặc định cho mobile, flex-md-row cho desktop đã có trong HTML */
-  align-items: stretch; /* Đảm bảo các cột con có cùng chiều cao */
-  justify-content: center;
-  height: auto; /* Để nó co giãn theo nội dung, hoặc đặt chiều cao cố định cho desktop */
-  min-height: 500px; /* Chiều cao tối thiểu cho player để visualizer có chỗ */
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
 }
 
-/* Phần nội dung chính của player (bên trái) */
+/* Toggle mode button styling */
+#toggle-mode {
+  border: 1px solid;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: var(--toggle-btn-bg-dark-mode);
+  color: var(--toggle-btn-text-dark-mode);
+  border-color: var(--toggle-btn-text-dark-mode);
+}
+
+#toggle-mode:hover {
+  background-color: var(--toggle-btn-hover-bg-dark-mode);
+  color: var(--toggle-btn-hover-text-dark-mode);
+  border-color: var(--toggle-btn-hover-text-dark-mode);
+}
+
+body.light-mode #toggle-mode {
+  background-color: var(--toggle-btn-bg-light-mode);
+  color: var(--toggle-btn-text-light-mode);
+  border-color: var(--toggle-btn-text-light-mode);
+}
+
+body.light-mode #toggle-mode:hover {
+  background-color: var(--toggle-btn-hover-bg-light-mode);
+  color: var(--toggle-btn-hover-text-light-mode);
+  border-color: var(--toggle-btn-hover-text-light-mode);
+}
+
+/* ===== MUSIC PLAYER SECTION (RIGHT COLUMN) ===== */
+#player {
+  background-color: var(--card-bg);
+  padding: 0;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  align-items: stretch;
+  justify-content: center;
+  height: auto;
+  min-height: 500px;
+}
+
+/* Main player content (left part of player) */
 .player-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 30px; /* Padding riêng cho nội dung bên trong */
+  padding: 30px;
 }
 
-/* Container cho visualizer (bên phải) */
+/* Visualizer container (right part of player) */
 #visualizer-container {
-  /* Các thuộc tính flexbox đã có trong HTML (d-flex, justify-content-center, align-items-center) */
-  background-color: transparent; /* Nền trong suốt để hòa hợp với card-bg của player */
-  border-radius: 15px; /* Giữ bo tròn nếu muốn */
-  padding: 20px; /* Optional padding */
+  background-color: transparent;
+  border-radius: 15px;
+  padding: 20px;
 }
 
-/* Kích thước của Visualizer canvas */
 #visualizer {
-  background-color: transparent; /* Nền trong suốt cho canvas */
-  /* Kích thước được định nghĩa trong HTML attributes: width="150" height="400" */
-  /* Bạn có thể ghi đè bằng CSS nếu muốn responsive hơn, nhưng attributes ưu tiên cho rendering */
-  max-width: 100%; /* Đảm bảo responsive */
-  height: auto; /* Giữ tỉ lệ nếu width thay đổi */
+  background-color: transparent;
+  max-width: 100%;
+  height: auto;
 }
-
-/* Responsive cho desktop */
-@media (min-width: 768px) {
-  #player {
-    /* flex-direction: row; đã có trong HTML (flex-md-row) */
-    align-items: stretch; /* Căn chỉnh các mục để có cùng chiều cao */
-    max-width: 900px; /* Giới hạn chiều rộng tổng thể của player trên desktop */
-    margin: 0 auto; /* Căn giữa player trên màn hình lớn */
-    min-height: 500px; /* Đặt chiều cao cố định cho player để visualizer vừa vặn */
-  }
-
-  .player-content {
-    flex: 3; /* Chiếm 3 phần không gian */
-    padding: 30px; /* Padding cho nội dung chính */
-    border-right: 1px solid var(--border-color); /* Đường phân cách */
-  }
-
-  #visualizer-container {
-    flex: 1; /* Chiếm 1 phần không gian */
-    padding: 20px; /* Padding cho visualizer */
-  }
-}
-
-/* -------------------- Các phần CSS còn lại -------------------- */
 
 .song-info {
   display: flex;
@@ -170,6 +191,7 @@ h4 {
   text-align: center;
 }
 
+/* Control buttons */
 .controls {
   display: flex;
   gap: 20px;
@@ -178,7 +200,6 @@ h4 {
   align-items: center;
 }
 
-/* Base style for all control buttons */
 .btn-control {
   background-color: var(--control-btn-bg);
   border: none;
@@ -191,7 +212,7 @@ h4 {
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
-  overflow: hidden; /* Quan trọng để các pseudo-elements không tràn ra ngoài */
+  overflow: hidden;
 }
 
 .btn-control:hover {
@@ -207,42 +228,35 @@ h4 {
 }
 
 .btn-play-pause {
-  background-color: var(
-    --icon-color
-  ); /* Updated to use icon-color for consistency */
+  background-color: var(--icon-color);
   width: 80px;
   height: 80px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn-play-pause:hover {
-  background-color: var(
-    --icon-hover-color
-  ); /* Updated to use icon-hover-color */
+  background-color: var(--icon-hover-color);
   transform: translateY(-3px);
 }
 
-/* CÁC ICON ĐIỀU KHIỂN BẰNG CSS */
-
-/* Base for all icons */
+/* CSS Icons */
 .control-icon::before,
 .control-icon::after {
   content: "";
   position: absolute;
   display: block;
-  transition: all 0.3s ease; /* Thêm transition cho mọi thay đổi */
+  transition: all 0.3s ease;
 }
 
-/* Play Icon (default) */
 .play-pause-icon::before {
   content: "";
   position: absolute;
   width: 0;
   height: 0;
-  border-top: 13px solid transparent; /* Giảm kích thước */
-  border-bottom: 13px solid transparent; /* Giảm kích thước */
-  border-left: 20px solid var(--icon-color); /* Giảm kích thước */
-  left: 55%; /* Tinh chỉnh vị trí để trông cân đối hơn */
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  border-left: 20px solid var(--icon-color);
+  left: 55%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
@@ -270,65 +284,58 @@ h4 {
   left: calc(50% + 6px);
 }
 
-/* Prev Icon */
 .prev-icon::before {
   border-style: solid;
-  border-width: 10px 15px 10px 0; /* Tam giác chỉ về trái */
+  border-width: 10px 15px 10px 0;
   border-color: transparent var(--icon-color) transparent transparent;
-  left: calc(50% + 5px); /* Dịch sang phải một chút */
+  left: calc(50% + 5px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .prev-icon::after {
-  /* Gạch của prev icon */
   width: 5px;
   height: 20px;
   background-color: var(--icon-color);
-  left: calc(50% - 10px); /* Vị trí gạch */
+  left: calc(50% - 10px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .btn-control:hover .prev-icon::before {
-  /* Hover color for triangle */
   border-color: transparent var(--icon-hover-color) transparent transparent;
 }
 .btn-control:hover .prev-icon::after {
   background-color: var(--icon-hover-color);
 }
 
-/* Next Icon */
 .next-icon::before {
   border-style: solid;
-  border-width: 10px 0 10px 15px; /* Tam giác chỉ về phải */
+  border-width: 10px 0 10px 15px;
   border-color: transparent transparent transparent var(--icon-color);
-  left: calc(50% - 5px); /* Dịch sang trái một chút */
+  left: calc(50% - 5px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .next-icon::after {
-  /* Gạch của next icon */
   width: 5px;
   height: 20px;
   background-color: var(--icon-color);
-  left: calc(50% + 10px); /* Vị trí gạch */
+  left: calc(50% + 10px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .btn-control:hover .next-icon::before {
-  /* Hover color for triangle */
   border-color: transparent transparent transparent var(--icon-hover-color);
 }
 .btn-control:hover .next-icon::after {
   background-color: var(--icon-hover-color);
 }
 
-/* Shuffle Icon */
 .shuffle-icon::before {
   width: 20px;
   height: 2px;
   background-color: var(--icon-color);
   transform: translate(-50%, -50%) rotate(45deg);
-  top: calc(50% - 7px); /* Dịch lên trên trái */
+  top: calc(50% - 7px);
   left: calc(50% - 7px);
 }
 .shuffle-icon::after {
@@ -336,33 +343,29 @@ h4 {
   height: 2px;
   background-color: var(--icon-color);
   transform: translate(-50%, -50%) rotate(-45deg);
-  top: calc(50% + 7px); /* Dịch xuống dưới phải */
+  top: calc(50% + 7px);
   left: calc(50% + 7px);
 }
 
-/* Active/Hover states for shuffle icon */
 .shuffle-icon.active::before,
 .shuffle-icon.active::after {
-  background-color: var(--active-icon-color); /* Màu khi active */
+  background-color: var(--active-icon-color);
 }
 .btn-control:hover .shuffle-icon::before,
 .btn-control:hover .shuffle-icon::after {
   background-color: var(--icon-hover-color);
 }
 
-/* Repeat Icon */
 .repeat-icon::before {
-  /* Vòng tròn */
   width: 20px;
   height: 20px;
   border: 2px solid var(--icon-color);
   border-radius: 50%;
-  border-top-color: transparent; /* Giữ phần trên trong suốt để tạo hiệu ứng mũi tên */
+  border-top-color: transparent;
   transform: translate(-50%, -50%) rotate(-45deg);
   box-sizing: border-box;
 }
 .repeat-icon::after {
-  /* Mũi tên nhỏ */
   width: 0;
   height: 0;
   border-top: 5px solid transparent;
@@ -373,7 +376,6 @@ h4 {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* Active/Hover states for repeat icon */
 .repeat-icon.active::before {
   border-color: var(--active-icon-color);
   border-top-color: transparent;
@@ -389,28 +391,24 @@ h4 {
   border-left-color: var(--icon-hover-color);
 }
 
-/* Repeat One (biểu tượng số 1 nhỏ) */
 .repeat-icon.repeat-one::before {
-  /* Vòng tròn giữ nguyên */
   border-color: var(--active-icon-color);
   border-top-color: transparent;
-  content: ""; /* Đảm bảo không có content mặc định */
+  content: "";
 }
 .repeat-icon.repeat-one::after {
-  /* Loại bỏ mũi tên */
-  content: "1"; /* Đặt số 1 vào after */
+  content: "1";
   font-size: 14px;
   font-weight: bold;
   color: var(--active-icon-color);
   width: auto;
-  height: auto; /* Điều chỉnh kích thước cho text */
+  height: auto;
   border: none;
-  background: none; /* Bỏ các thuộc tính hình dạng cũ */
-  top: 50%; /* Căn giữa */
-  left: 50%; /* Căn giữa */
-  transform: translate(-50%, -50%); /* Căn giữa */
+  background: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-/* Hover cho Repeat One: vẫn là màu hover thông thường */
 .btn-control:hover .repeat-icon.repeat-one::before {
   border-color: var(--icon-hover-color);
   border-top-color: transparent;
@@ -425,14 +423,14 @@ h4 {
   height: 0;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  border-right: 12px solid var(--icon-color); /* Arrow pointing left */
+  border-right: 12px solid var(--icon-color);
   position: absolute;
   left: calc(50% - 5px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .rewind-icon::after {
-  content: "10"; /* Text for 10 seconds */
+  content: "10";
   font-size: 10px;
   font-weight: bold;
   color: var(--icon-color);
@@ -454,14 +452,14 @@ h4 {
   height: 0;
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
-  border-left: 12px solid var(--icon-color); /* Arrow pointing right */
+  border-left: 12px solid var(--icon-color);
   position: absolute;
   left: calc(50% + 5px);
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .forward-icon::after {
-  content: "10"; /* Text for 10 seconds */
+  content: "10";
   font-size: 10px;
   font-weight: bold;
   color: var(--icon-color);
@@ -477,37 +475,10 @@ h4 {
   color: var(--icon-hover-color);
 }
 
-/* Volume Icon - Bạn có label 🔊 trực tiếp trong HTML nên icon CSS này không được dùng */
-/* Nếu bạn muốn dùng icon CSS cho volume, hãy bỏ label 🔊 và thêm <span class="control-icon volume-icon"></span> vào HTML */
-.volume-icon::before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 10px solid var(--icon-color);
-  position: absolute;
-  left: 30%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.volume-icon::after {
-  content: "";
-  width: 5px;
-  height: 10px;
-  border: 2px solid var(--icon-color);
-  border-left: none;
-  border-radius: 0 50% 50% 0;
-  position: absolute;
-  left: 45%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Thanh tiến trình và thanh âm lượng */
+/* Progress and Volume Bars */
 .progress-container {
   width: 100%;
-  max-width: 450px; /* Vẫn giữ max-width cho thanh tiến trình */
+  max-width: 450px;
 }
 
 .form-range {
@@ -520,7 +491,6 @@ h4 {
   flex-grow: 1;
 }
 
-/* Track (phần chưa đi qua) của thanh tiến trình và âm lượng */
 .form-range::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
@@ -535,7 +505,6 @@ h4 {
   border-radius: 5px;
 }
 
-/* Thumb (nút kéo) */
 .form-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -545,7 +514,7 @@ h4 {
   background: var(--range-thumb-bg);
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  margin-top: -6px; /* Căn chỉnh với track */
+  margin-top: -6px;
 }
 
 .form-range::-moz-range-thumb {
@@ -557,9 +526,6 @@ h4 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Phần đã qua của thanh tiến trình và âm lượng */
-/* Sử dụng background-image để tạo gradient cho phần đã qua */
-/* Đặt gradient trực tiếp vào track thay vì toàn bộ element */
 #progress::-webkit-slider-runnable-track,
 #volume::-webkit-slider-runnable-track {
   background: linear-gradient(
@@ -582,128 +548,14 @@ h4 {
   );
 }
 
-/* Fix cho Firefox để thumb không bị đè màu gradient */
 #progress::-moz-range-thumb,
 #volume::-moz-range-thumb {
   background: var(--range-thumb-bg);
 }
 
-/* Màu cho hiển thị thời gian */
 #current-time,
 #duration {
-  color: var(--time-text-color); /* Sử dụng biến màu mới */
-}
-
-/* Điều chỉnh vị trí d-flex cho tiêu đề và nút toggle */
-.d-flex.justify-content-between.align-items-center.mb-3 {
-  background-color: var(--card-bg);
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-}
-
-#playlist {
-  list-style: none;
-  padding: 0;
-  max-height: 600px; /* Giới hạn chiều cao cho playlist */
-  overflow-y: auto; /* Thêm scroll khi quá dài */
-  border: 1px solid var(--border-color); /* Sử dụng border-color chung */
-  border-radius: 10px;
-  background-color: var(--card-bg); /* Đảm bảo nền playlist cùng màu card */
-}
-
-#playlist::-webkit-scrollbar {
-  width: 8px;
-}
-
-#playlist::-webkit-scrollbar-track {
-  background: var(--card-bg);
-  border-radius: 10px;
-}
-
-#playlist::-webkit-scrollbar-thumb {
-  background: var(--item-hover);
-  border-radius: 10px;
-}
-
-#playlist::-webkit-scrollbar-thumb:hover {
-  background: var(--control-btn-hover);
-}
-
-#playlist li {
-  cursor: pointer;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  padding: 12px 15px;
-  display: flex;
-  align-items: center;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-  border: 1px solid var(--border-color); /* Sử dụng border-color chung */
-}
-
-#playlist li:last-child {
-  margin-bottom: 0;
-}
-
-#playlist li:hover {
-  background-color: var(--item-hover);
-  transform: translateY(-2px);
-}
-
-#playlist li.active {
-  background-color: var(--active-bg);
-  color: var(--active-text);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-#playlist li img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#playlist li span {
-  text-align: left;
-  flex: 1;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-/* Toggle mode button styling (giữ nguyên) */
-#toggle-mode {
-  border: 1px solid;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
-  padding: 8px 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  background-color: var(--toggle-btn-bg-dark-mode);
-  color: var(--toggle-btn-text-dark-mode);
-  border-color: var(--toggle-btn-text-dark-mode);
-}
-
-#toggle-mode:hover {
-  background-color: var(--toggle-btn-hover-bg-dark-mode);
-  color: var(--toggle-btn-hover-text-dark-mode);
-  border-color: var(--toggle-btn-hover-text-dark-mode);
-}
-
-body.light-mode #toggle-mode {
-  background-color: var(--toggle-btn-bg-light-mode);
-  color: var(--toggle-btn-text-light-mode);
-  border-color: var(--toggle-btn-text-light-mode);
-}
-
-body.light-mode #toggle-mode:hover {
-  background-color: var(--toggle-btn-hover-bg-light-mode);
-  color: var(--toggle-btn-hover-text-light-mode);
-  border-color: var(--toggle-btn-hover-text-light-mode);
+  color: var(--time-text-color);
 }
 
 /* Dropdown menu for speed and timer */
@@ -729,7 +581,6 @@ body.light-mode #toggle-mode:hover {
   color: var(--icon-hover-color);
 }
 
-/* Style cho các icon bên trong nút dropdown */
 .speed-icon,
 .sleep-timer-icon {
   color: var(--icon-color);
@@ -742,7 +593,6 @@ body.light-mode #toggle-mode:hover {
   color: var(--icon-hover-color);
 }
 
-/* Cập nhật style cho dropdown menu */
 .dropdown-menu {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -776,14 +626,275 @@ body.light-mode #toggle-mode:hover {
   color: var(--text-color);
 }
 
-/* Responsive adjustments */
+/* ===== LEFT COLUMN: SONGS & PLAYLISTS SECTIONS ===== */
+
+/* Buttons to switch between Songs and Playlists frames */
+.d-flex.justify-content-around.mb-3 > .btn {
+  font-weight: bold;
+}
+
+.d-flex.justify-content-around.mb-3 > .btn.active {
+  background-color: var(--active-bg) !important;
+  border-color: var(--active-bg) !important;
+  color: var(--active-text) !important;
+}
+
+/* Frame management (for songs-frame and playlists-frame) */
+.frame {
+  transition: opacity 0.3s ease;
+  padding-top: 10px; /* Add padding top to avoid sticking to toggle buttons */
+  max-height: calc(100vh - 200px); /* Adjust based on header/footer height */
+  overflow-y: auto; /* Add scroll when content overflows */
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--card-bg);
+  padding-bottom: 15px; /* Add some padding at the bottom */
+}
+
+.frame.d-none {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+}
+
+.frame.active-frame {
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+}
+
+/* Scrollbar for frames */
+.frame::-webkit-scrollbar {
+  width: 8px;
+}
+
+.frame::-webkit-scrollbar-track {
+  background: var(--card-bg);
+  border-radius: 10px;
+}
+
+.frame::-webkit-scrollbar-thumb {
+  background: var(--item-hover);
+  border-radius: 10px;
+}
+
+.frame::-webkit-scrollbar-thumb:hover {
+  background: var(--control-btn-hover);
+}
+
+
+/* --- Common styles for song/playlist list items --- */
+.list-group-item.playlist-item { /* Applies to both all-songs-list and playlist-list items */
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.list-group-item.playlist-item:last-child {
+  margin-bottom: 0;
+}
+
+.list-group-item.playlist-item:hover {
+  background-color: var(--item-hover);
+  transform: translateY(-2px);
+}
+
+.list-group-item.playlist-item.active { /* For currently playing song */
+  background-color: var(--active-bg);
+  color: var(--active-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.list-group-item.playlist-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item.playlist-item span {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 400;
+  white-space: nowrap; /* Prevent title wrapping */
+  overflow: hidden;    /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
+/* --- SONGS FRAME SPECIFIC STYLES --- */
+#songs-frame {
+  /* No specific styles needed beyond common frame and list item styles */
+}
+
+#all-songs-list { /* This is the ul for all songs */
+  list-style: none;
+  padding: 0;
+  /* Max height and overflow handled by .frame */
+}
+
+
+/* --- PLAYLISTS FRAME SPECIFIC STYLES --- */
+#playlists-frame {
+  /* No specific styles needed beyond common frame and list item styles */
+}
+
+/* Playlist header (title, create/back buttons) */
+#playlists-frame > .d-flex {
+    margin-top: 5px; /* Adjust spacing */
+    margin-bottom: 15px !important; /* Override mb-3 for better spacing */
+    padding: 0 10px; /* Add horizontal padding to align with list items */
+}
+
+#playlist-title {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px; /* Space between title and buttons */
+}
+
+/* Buttons for creating/managing playlists */
+#create-playlist-btn,
+#back-to-playlists-btn {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 8px; /* Slightly more rounded buttons */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+#create-playlist-btn {
+    background-color: var(--playlist-add-btn);
+    border-color: var(--playlist-add-btn);
+    color: #fff;
+}
+
+#create-playlist-btn:hover {
+    background-color: var(--playlist-add-btn-hover);
+    border-color: var(--playlist-add-btn-hover);
+    transform: translateY(-1px);
+}
+
+#back-to-playlists-btn {
+    background-color: var(--control-btn-bg); /* Use a neutral button color */
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+#back-to-playlists-btn:hover {
+    background-color: var(--control-btn-hover);
+    border-color: var(--control-btn-hover);
+    transform: translateY(-1px);
+}
+
+/* List of Playlists (main list) */
+#playlist-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px; /* Space from title/buttons */
+  /* Max height and overflow handled by .frame */
+}
+
+#playlist-list .list-group-item.playlist-item {
+    /* Specific styles for playlist items if needed */
+    /* active class for selected playlist is now 'active-playlist' to avoid conflict */
+}
+
+/* Playlist actions (edit/delete buttons inside playlist items) */
+.playlist-actions {
+    margin-left: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.playlist-actions .btn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.playlist-actions .btn-outline-info { /* For edit button */
+    color: var(--playlist-add-btn);
+    border-color: var(--playlist-add-btn);
+}
+.playlist-actions .btn-outline-info:hover {
+    background-color: var(--playlist-add-btn-hover);
+    color: #fff;
+    border-color: var(--playlist-add-btn-hover);
+}
+
+.playlist-actions .btn-outline-danger { /* For delete button */
+    color: var(--playlist-delete-btn);
+    border-color: var(--playlist-delete-btn);
+}
+.playlist-actions .btn-outline-danger:hover {
+    background-color: var(--playlist-delete-btn-hover);
+    color: #fff;
+    border-color: var(--playlist-delete-btn-hover);
+}
+
+/* Add to playlist button for individual songs */
+.add-to-playlist-btn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    color: var(--playlist-add-btn);
+    border-color: var(--playlist-add-btn);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.add-to-playlist-btn:hover {
+    background-color: var(--playlist-add-btn-hover);
+    color: #fff;
+    border-color: var(--playlist-add-btn-hover);
+}
+
+/* Songs within a selected playlist (initially hidden) */
+#current-playlist-songs {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  /* Max height and overflow handled by .frame */
+}
+
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (min-width: 768px) {
+  #player {
+    align-items: stretch;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 500px;
+  }
+
+  .player-content {
+    flex: 3;
+    padding: 30px;
+    border-right: 1px solid var(--border-color);
+  }
+
+  #visualizer-container {
+    flex: 1;
+    padding: 20px;
+  }
+}
+
 @media (max-width: 767.98px) {
   .col-md-4,
   .col-md-8 {
     width: 100%;
   }
 
-  /* Đảm bảo thứ tự phù hợp trên mobile */
   .order-1 {
     order: 1 !important;
   }
@@ -791,19 +902,18 @@ body.light-mode #toggle-mode:hover {
     order: 2 !important;
   }
 
-  /* Player không cần padding riêng nữa, các div con đã có */
   #player {
     margin-bottom: 20px;
     padding: 0;
   }
 
   .player-content {
-    padding: 20px; /* Padding cho nội dung player trên mobile */
+    padding: 20px;
   }
 
   #visualizer-container {
-    padding: 20px; /* Padding cho visualizer trên mobile */
-    min-height: 150px; /* Chiều cao tối thiểu cho visualizer ngang trên mobile */
+    padding: 20px;
+    min-height: 150px;
   }
 
   #song-img {
@@ -825,7 +935,6 @@ body.light-mode #toggle-mode:hover {
     height: 70px;
   }
 
-  /* Điều chỉnh kích thước icon trong responsive nếu cần */
   .play-pause-icon::before,
   .btn-play-pause.playing .play-pause-icon::before,
   .btn-play-pause.playing .play-pause-icon::after {
@@ -847,22 +956,21 @@ body.light-mode #toggle-mode:hover {
     transform: scale(0.8) translate(-50%, -50%);
   }
 
-  #playlist li {
+  .list-group-item.playlist-item {
     padding: 10px;
   }
 
-  #playlist li img {
+  .list-group-item.playlist-item img {
     width: 50px;
     height: 50px;
   }
 
-  #playlist li span {
+  .list-group-item.playlist-item span {
     font-size: 0.9rem;
   }
 
-  /* Đảm bảo visualizer trên mobile là ngang */
   #visualizer {
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
-    height: 100px; /* Chiều cao nhỏ hơn trên mobile */
+    width: 100%;
+    height: 100px;
   }
 }

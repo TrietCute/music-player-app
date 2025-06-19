@@ -30,53 +30,42 @@
             </button>
           </div>
 
-          <h4 class="mb-3">Playlist</h4>
-          <ul id="playlist" class="list-group">
-            <li class="list-group-item playlist-item" onclick="selectSong(0)">
-              <img src="img/not-a-hero.jpg" alt="thumb" />
-              <span>[ 킹스레이드 ] OST - -Not A Hero- (ENG ver.)</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(1)">
-              <img src="img/the-right.jpg" alt="thumb" />
-              <span
-                >[KING's RAID] CH.10 Title Song -The Right- - - Rebellion</span
-              >
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(2)">
-              <img src="img/deja-vu.jpg" alt="thumb" />
-              <span
-                >[MV] Deja Vu (Japanese Ver.) - KING's RAID X Dreamcatcher</span
-              >
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(3)">
-              <img src="img/hell-n-back.jpg" alt="thumb" />
-              <span>Bakar - Hell N Back (Official Video)</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(4)">
-              <img src="img/liyue-ost.jpg" alt="thumb" />
-              <span>Genshin Impact - Liyue OST Relaxing Mix</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(5)">
-              <img src="img/operation-blade.jpg" alt="thumb" />
-              <span>Operation Blade</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(6)">
-              <img src="img/operation-lead-seal.jpg" alt="thumb" />
-              <span>Operation Lead Seal</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(7)">
-              <img src="img/with-glory-i-shall-fall.jpg" alt="thumb" />
-              <span>With Glory I Shall Fall</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(8)">
-              <img src="img/blooming-in-the-mud.jpg" alt="thumb" />
-              <span>ウォルピスカーター MV 泥中に咲く</span>
-            </li>
-            <li class="list-group-item playlist-item" onclick="selectSong(9)">
-              <img src="img/little-love-song.jpg" alt="thumb" />
-              <span>オリジナルPV 小さな恋のうた MONGOL800(cover) by天月</span>
-            </li>
-          </ul>
+          <div class="d-flex justify-content-around mb-3">
+            <button
+              id="show-songs-btn"
+              class="btn btn-primary flex-grow-1 me-2 active"
+            >
+              Songs
+            </button>
+            <button
+              id="show-playlists-btn"
+              class="btn btn-secondary flex-grow-1"
+            >
+              Playlists
+            </button>
+          </div>
+
+          <div id="songs-frame" class="frame active-frame px-2">
+            <h4 class="mb-3">All Songs</h4>
+            <ul id="all-songs-list" class="list-group"></ul>
+          </div>
+
+          <div id="playlists-frame" class="frame d-none px-2">
+            <h4 id="playlist-title" class="mb-3">Playlists</h4>
+            <button id="create-playlist-btn" class="btn btn-success btn-sm">
+              <i class="fas fa-plus me-1"></i> Create New
+            </button>
+            <button
+              id="back-to-playlists-btn"
+              class="btn btn-info btn-sm d-none"
+            >
+              <i class="fas fa-arrow-left me-1"></i> Back
+            </button>
+
+            <ul id="playlist-list" class="list-group mb-3"></ul>
+
+            <ul id="current-playlist-songs" class="list-group d-none"></ul>
+          </div>
         </div>
 
         <div class="col-12 col-md-8 order-md-2 order-1">
@@ -312,6 +301,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="songData.js"></script>
     <script src="scripts.js"></script>
   </body>
 </html>
